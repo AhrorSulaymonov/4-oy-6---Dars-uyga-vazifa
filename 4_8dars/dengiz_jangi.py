@@ -17,5 +17,5 @@ lst = [
     ["*",".","."],
     [".","*","."]
     ]
-koordinata = "C1"
+koordinata = "A2"
 print(dengizjangi(lst,koordinata))
