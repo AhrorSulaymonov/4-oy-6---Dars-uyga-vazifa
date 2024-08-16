@@ -1,9 +1,11 @@
-import datetime
+from datetime import datetime
+from os import system
+system("cls")
 class BankAccount:
-    def __init__(self) -> None:
+    def __init__(self,ownername) -> None:
         self.__balance = 0.0
-        self.__ownerName = "Defult"
-        self.__ownerId = 9860012145857445
+        self.__ownerName = ownername
+        self.__ownerId = "9860012145857445"
         self.__ownerPhoneNumber = "998#########"
         self.__paymentHistory = [{
             "Defult":{
@@ -38,6 +40,8 @@ paymentHistory      {self.__paymentHistory}"""
             self.__ownerPhoneNumber = newphonenumber
         else:
             raise ValueError("AKA nummerni xato kiritdingizov")
+    def setownerId(self, newownerId):
+        self.__ownerId = newownerId
     def  AddBalance(self, plusbalance : float):
         if isinstance(plusbalance, (int, float)) and plusbalance > 0:
             self.__balance += plusbalance
@@ -53,7 +57,7 @@ paymentHistory      {self.__paymentHistory}"""
         if isinstance(qabul_qiluvchi, BankAccount) and isinstance(summa,(int,float)):
             self.WithdrawBalance(summa)
             qabul_qiluvchi.AddBalance(summa)
-            if self.__paymentHistory[0].key == "Defult":
+            if list(self.__paymentHistory[0].keys())[0] == "Defult":
                 self.__paymentHistory.remove(self.__paymentHistory[0])
             self.__paymentHistory.append({
                 datetime.now() : {
@@ -62,5 +66,12 @@ paymentHistory      {self.__paymentHistory}"""
                     "summa" : summa
                 }
             })
-Ahror = BankAccount()
+Ahror = BankAccount("Ahror Sulaymonov")
+print(Ahror.GetAccountInfo())
+Ahror.AddBalance(178.85)
+Ahror.SetPhoneNumber("998500082310")
+Ahror.setownerId("9860120145588995")
+print(Ahror.GetBalance())
+Ibrohim = BankAccount("Ibrohim Shojimov")
+Ahror.Transfer(Ibrohim, 100.8)
 print(Ahror.GetAccountInfo())
