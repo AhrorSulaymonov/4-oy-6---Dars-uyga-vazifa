@@ -1,0 +1,15 @@
+1   c) Classdan olingan obyekt
+2   b) O'zgaruvchilarni sinf ichida private qilib belgilash orqali
+3   a) Bir xil nom bilan turli xil funksiyalarni amalga oshirish
+4   b)  __init__
+
+
+5   Quyidagi kodning natijasini izohlang.
+    Python
+    lst = [1,-3,8,5,2,-5,9]
+    print(list(filter(lambda x: x > 0, lst)))   
+
+
+    [1, 8, 5, 2, 9]
+    chunki filter filterlaydi lambda funksiya esa noldan katta bolsa True qaytaradi
+    True qaytargan qiymatlarni listda saqlab qoladi Falselar esa chopiladi)
