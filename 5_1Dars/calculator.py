@@ -338,9 +338,8 @@ def Cdef():
     textbox_Main.setPlaceholderText("0")
 def teskaridef():
     txt=textbox_Main.text()
-    if txt == "" or "0":
-        return
-    textbox_Main.setText(str(1/(float(txt)))[:14])
+    if txt != '0' and len(txt) != 0:
+        textbox_Main.setText(str(1/(float(txt)))[:14])
 def kvadratdef():
     txt=textbox_Main.text()
     if (float(txt))**2 % 1 == 0:
