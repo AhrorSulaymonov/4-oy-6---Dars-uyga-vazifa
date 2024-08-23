@@ -332,7 +332,21 @@ def bol():
     textbox_Main.setText(txt + "/")
 def teng():
     txt=textbox_Main.text()
-    textbox_Main.setText(str(eval(txt)))
+    try:
+        # Amallarni hisoblaymiz
+        textbox_Main.setText(str(eval(txt)))
+    except ZeroDivisionError:
+        # Agar nolga bo'lish amali bo'lsa
+        textbox_Main.setText("Nolga bo'lish mumkin emas")
+        textbox_Main.setStyleSheet("""
+        font-size : 18px
+""")
+    except Exception as e:
+        textbox_Main.setText(f"Xatolik: {e}")
+        textbox_Main.setStyleSheet("""
+        font-size : 18px
+""")
+    
 def Cdef():
     textbox_Main.setText("")
     textbox_Main.setPlaceholderText("0")
