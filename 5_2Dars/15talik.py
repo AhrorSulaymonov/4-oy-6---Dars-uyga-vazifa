@@ -1,7 +1,7 @@
 from os import system
 system("cls")
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 import random
 koordinatalar = [[10,10,100,100],[120,10,100,100],[230,10,100,100],[340,10,100,100],[10,120,100,100],[120,120,100,100],[230,120,100,100],[340,120,100,100],[10,230,100,100],[120,230,100,100],[230,230,100,100],[340,230,100,100],[10,340,100,100],[120,340,100,100],[230,340,100,100],[340,340,100,100]]
 tanlanganlar = []
@@ -46,8 +46,7 @@ class window(QWidget):
         buttons.append(self.button13)
         buttons.append(self.button14)
         buttons.append(self.button15)
-        print(koordinatalar)
-        print("koordinatalar1")
+       
         for i in range(len(buttons)):
             
             kordinata = random.choice(koordinatalar)
@@ -62,13 +61,6 @@ class window(QWidget):
             buttonsinfo.append(kordinata)
             for i in range(len(koordinatalar)):
                 koordinatalar[i] = koordinatalar[i][:4]
-        print(tanlanganlar)
-        print("tanlanganlar")
-        
-        print(koordinatalar)
-        print("koordinatalar2")
-        print(buttonsinfo)
-        print("--------buttonsinfo---------")
         self.button1.clicked.connect(lambda: self.buttonclick(self.button1))
         self.button2.clicked.connect(lambda: self.buttonclick(self.button2))
         self.button3.clicked.connect(lambda: self.buttonclick(self.button3))
@@ -84,43 +76,60 @@ class window(QWidget):
         self.button13.clicked.connect(lambda: self.buttonclick(self.button13))
         self.button14.clicked.connect(lambda: self.buttonclick(self.button14))
         self.button15.clicked.connect(lambda: self.buttonclick(self.button15))
-
-
-        self.show()
     
+        self.show()
+
+
+        
     def buttonclick(self, button: QPushButton):
+
         global koordinatalar, tanlanganlar, buttons, buttonsinfo, winlist
-        print(koordinatalar)
-        print("koordinatalar")
         breakmi = False
         for kordinata in koordinatalar:
             if breakmi:
                 break
             if kordinata not in tanlanganlar:
-                button.setGeometry(kordinata[0],kordinata[1],kordinata[2],kordinata[3])
                 for buttoninfo in buttonsinfo:
                     if buttoninfo[4] == int(button.text()):
-                        tanlanganlar.remove(buttoninfo[:4])
-                        tanlanganlar.append(kordinata[:4])
-                        print(tanlanganlar)
-                        print("------tanlanganlar-----------")
-                        print(buttoninfo[:4])
-                        print("-------buttoninfo[:4]----------")
-                        buttonsinfo.remove(buttoninfo)
-                        kordinata.append(int(button.text()))
-                        buttonsinfo.append(kordinata[:5])
-                        breakmi = True
-                        break
+                        if abs(buttoninfo[0] - kordinata[0]) == 110 and abs(buttoninfo[1] - kordinata[1]) == 0 or abs(buttoninfo[0] - kordinata[0]) == 0 and abs(buttoninfo[1] - kordinata[1]) == 110:
+                            button.setGeometry(kordinata[0],kordinata[1],kordinata[2],kordinata[3])
+                            tanlanganlar.remove(buttoninfo[:4])
+                            tanlanganlar.append(kordinata[:4])
+                            buttonsinfo.remove(buttoninfo)
+                            kordinata.append(int(button.text()))
+                            buttonsinfo.append(kordinata[:5])
+                            breakmi = True
+                            break
+        msgBox = QMessageBox(self)
+        msgBox.setText("yutdingiz\nyana o'ynashni istaysizmi")
+
+        if self.galabami():
+            msgBox.setWindowTitle("So'rov")
+            msgBox.setIcon(QMessageBox.Question)
+            msgBox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            retval = msgBox.exec()
+
+            if retval == QMessageBox.Yes:
+                print("Yes bosildi")
+                tanlanganlar = []
+                buttons = []
+                buttonsinfo = []
+                self.__init__()
+            elif retval == QMessageBox.No:
+                print("No bosildi")
+                self.close()
         for i in range(len(koordinatalar)):
             koordinatalar[i] = koordinatalar[i][:4]
         breakmi = False
-        print(koordinatalar)
-        print("koordinatalarlast")
-        print(tanlanganlar)
-        print("------tanlanganlarlst-----------")
-        print(buttonsinfo)
-        print("buttunsinfolast")
 
+    
+    def galabami(self):
+        global koordinatalar, tanlanganlar, buttons, buttonsinfo, winlist
+
+        for buttoninfo in buttonsinfo:
+            if buttoninfo not in winlist:
+                return False
+        return True
                 
             
 
