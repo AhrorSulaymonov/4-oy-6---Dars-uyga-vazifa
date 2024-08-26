@@ -1,56 +1,47 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QMessageBox
-from os import system
-from time import sleep
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QRadioButton, QButtonGroup, QPushButton
 
-system("cls")
+app = QApplication(sys.argv)
 
-
-class Window(QWidget):
+class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Bu mening 3-dasturim")
-        # self.setFixedSize(400, 500)
-        self.resize(400, 400)
+        self.initUI()
 
-        self.ismLabel = QLabel("Aziz mors qani?", self)
-        self.ismLabel.setStyleSheet("""
-            font-size: 24px;
-            color: green;
-        """)
-        self.ismLabel.adjustSize()
-        self.ismLabel.move((self.width() - self.ismLabel.width()) // 2, 100)
+    def initUI(self):
+        layout = QVBoxLayout()
 
-        self.btn = QPushButton("Close", self)
-        self.btn.setStyleSheet("""
-            font-size: 22px;
-            color: white;
-            background-color: #75c2d1;
-        """)
-        self.btn.resize(150, 40)
-        self.btn.move((self.width() - self.btn.width()) // 2, 170)
+        # Radiobuttonlar yaratish
+        self.radio_button_1 = QRadioButton('Option 1')
+        self.radio_button_2 = QRadioButton('Option 2')
+        self.radio_button_3 = QRadioButton('Option 3')
 
-        self.btn.clicked.connect(self.bosildi)
+        # QButtonGroup orqali radiobuttonlarni birlashtirish
+        self.button_group = QButtonGroup()
+        self.button_group.addButton(self.radio_button_1)
+        self.button_group.addButton(self.radio_button_2)
+        self.button_group.addButton(self.radio_button_3)
 
-        self.show()
+        # Radiobuttonlarni tanlanmagan qilish uchun tugma
+        self.clear_button = QPushButton('Clear Selection')
+        self.clear_button.clicked.connect(self.clear_selection)
 
+        # Layoutga qo'shish
+        layout.addWidget(self.radio_button_1)
+        layout.addWidget(self.radio_button_2)
+        layout.addWidget(self.radio_button_3)
+        layout.addWidget(self.clear_button)
 
-    def bosildi(self):
-        msgBox = QMessageBox(self)
-        msgBox.setWindowTitle("So'rov")
-        msgBox.setIcon(QMessageBox.Question)
-        msgBox.setText("Chiqishni xohlaysizmi?")
-        msgBox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        retval = msgBox.exec()
+        self.setLayout(layout)
 
-        if retval == QMessageBox.Yes:
-            print("Yes bosildi")
-            self.close()
-        elif retval == QMessageBox.No:
-            print("No bosildi")
+    def clear_selection(self):
+        # Guruhdagi barcha radiobuttonlarni ajratib, tanlanmagan holatga qaytarish
+        self.button_group.setExclusive(False)  # Radiobuttonlarni mustaqil qiladi
+        for button in self.button_group.buttons():
+            button.setChecked(False)
+        self.button_group.setExclusive(True)  # Radiobuttonlarni qaytadan guruhlaydi
 
-
-app = QApplication([])
-oyna = Window()
-
-app.exec()
+window = MyWindow()
+window.show()
+sys.exit(app.exec_())

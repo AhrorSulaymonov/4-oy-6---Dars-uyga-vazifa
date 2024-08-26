@@ -9,6 +9,7 @@ def orol(a : list, i0 : int , j0 : int):
         for j in range(length2):
             if a[i][j] == 1 and abs(i0 - i) <=1 and abs(j0 - j) <= 1:
                 a[i0][j0] = 0
+                a[i][j] = 0
                 i0 = i
                 j0 = j
                 orol(a,i0,j0)

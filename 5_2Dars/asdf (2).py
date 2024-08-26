@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QRadioButton, QComboBox
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QRadioButton, QComboBox, QButtonGroup
 from os import system
 
 system("cls")
-
+togricount = 0
 TESTS = [
     {
         'id': 1,
@@ -13,7 +13,7 @@ TESTS = [
             'C': "Aziz",
             'D': "Mo'rs"
         },
-        'right_answer': 'C'
+        'right_answer': ['C']
     },
     {
         'id': 2,
@@ -24,8 +24,30 @@ TESTS = [
             'C': "Qirg'iziston",
             'D': "Aziziston"
         },
-        'right_answer': 'A'
+        'right_answer': ['A']
     },
+    {
+        'id': 3,
+        'question': "Ahror kim bo'lishni istidi",
+        'answers': {
+            'A': "Yaxshi odam",
+            'B': "Repper",
+            'C': "Yaxshi o'g'il",
+            'D': "Milliarder"
+        },
+        'right_answer': ['A','B','C','D']
+    },
+    {
+        'id': 4,
+        'question': "Hayot to'la ...",
+        'answers': {
+            'A': "hazillar",
+            'B': "va o'zgaradi manzillar",
+            'C': "mashaqqatdan dars olib",
+            'D': "men to'ldiraman puzllelar"
+        },
+        'right_answer': ['A','B','C','D']
+    }
 ]
 
 class Window(QWidget):
@@ -33,9 +55,12 @@ class Window(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Bu mening 3-dasturim")
+        self.setWindowTitle("Shunchaki")
         self.setFixedSize(800, 500)
-
+        self.lastlabel = QLabel(self)
+        
+        self.lastlabel.move(200, 200)
+        self.lastlabel.hide()
         self.questionLabel = QLabel("Savol", self)
         self.questionLabel.setStyleSheet("font-size: 22px; font-weight: bold; color: green;")
         self.questionLabel.move(20, 10)
@@ -56,6 +81,12 @@ class Window(QWidget):
         self.D_variant.setStyleSheet("font-size: 16px; color: #111336;")
         self.D_variant.move(50, 170)
 
+        self.javoblar = QButtonGroup()
+        self.javoblar.addButton(self.A_variant)
+        self.javoblar.addButton(self.B_variant)
+        self.javoblar.addButton(self.C_variant)
+        self.javoblar.addButton(self.D_variant)
+
         self.nextBtn = QPushButton("Next", self)
         self.nextBtn.setStyleSheet("font-size: 20px;")
         self.nextBtn.move(600, 400)
@@ -66,13 +97,6 @@ class Window(QWidget):
 
         self.show()
         
-
-    def clearRadioButtons(self):
-        self.A_variant.setChecked(False)
-        self.B_variant.setChecked(False)
-        self.C_variant.setChecked(False)
-        self.D_variant.setChecked(False)
-
 
     def fillWindowWithQuestion(self):
         question = TESTS[self.last_question_index]
@@ -87,14 +111,38 @@ class Window(QWidget):
         self.B_variant.adjustSize()
         self.C_variant.adjustSize()
         self.D_variant.adjustSize()
-
+    def clearbuttons(self):
+        self.javoblar.setExclusive(False)  # Radiobuttonlarni mustaqil qiladi
+        for button in self.javoblar.buttons():
+            button.setChecked(False)
+        self.javoblar.setExclusive(True)  # Radiobuttonlarni qaytadan guruhlaydi
 
     def nextFunction(self):
+        global togricount
+        selected_button = self.javoblar.checkedButton()
+        javoblartext = []
+        if selected_button:
+            for i in range(len(TESTS[self.last_question_index]["right_answer"])):
+                javoblartext.append(TESTS[self.last_question_index]["answers"][TESTS[self.last_question_index]["right_answer"][i]])
+            if selected_button.text() in javoblartext:
+                togricount += 1
+        self.clearbuttons()
         self.last_question_index += 1
+        
         if self.last_question_index >= len(TESTS):
-            print("Testlar tugadi")
+            self.A_variant.close()
+            self.B_variant.close()
+            self.C_variant.close()
+            self.D_variant.close()
+            self.questionLabel.clear()
+            self.nextBtn.close()
+            self.lastlabel.setText(f"Siz {togricount} ta tog'ri javob topdiz")
+            self.lastlabel.show()
+            
+            print(f"{togricount}")
         else:
             self.fillWindowWithQuestion()
+        
 
 
 app = QApplication([])
