@@ -34,7 +34,7 @@ def kvadrataniqlash(matrit : list, i0, j0):
         
 
 
-matritsa = [[1,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]]
+matritsa = [[1,1,1,1,0],[1,1,1,1,1],[1,1,1,1,0]]
 lingth1 = len(matritsa)
 lingth2 = len(matritsa[0])
 
