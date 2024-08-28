@@ -7,7 +7,9 @@ def atoi(string : str):
     for i in string:
         if i.isalpha():
             break
-        if i == "-" and "-" not in soncha:
+        if i == "-" and len(soncha) != 0:
+            break
+        if i == "-"  and len(soncha) == 0:
             soncha += "-"
         if soncha == "-" and i =="0":
             continue
