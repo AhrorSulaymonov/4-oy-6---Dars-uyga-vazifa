@@ -1,11 +1,11 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel
+from PyQt5.QtWidgets import QWidget, QLabel
 
-from components import *
+from components import Button, Input
 
-class MainPageUI(QWidget):
+class MainPage(QWidget):
     def __init__(self) -> None:
         super().__init__()
-        self.setFixedSize(400, 500)
+        self.setFixedSize(400, 500)    
         self.setWindowTitle("Bosh sahifa")
         self.label = QLabel("Bosh sahifa", self)
         self.label.setStyleSheet("font-size : 26px;")
@@ -19,10 +19,3 @@ class MainPageUI(QWidget):
         
 
 
-
-app = QApplication([])
-
-oyna = MainPageUI()
-oyna.show()
-
-app.exec()

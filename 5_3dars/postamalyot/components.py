@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QPushButton, QLabel, QLineEdit, QTextEdit, QWidget
+from PyQt5.QtWidgets import  QPushButton, QLabel, QLineEdit, QTextEdit, QWidget
 
 MAX_WIDTH_BUTTON = 0
 MAX_WIDTH_INPUT = 0
@@ -37,12 +37,36 @@ class Button(QPushButton):
         self.resize(MAX_WIDTH_BUTTON, self.height())
         self.move((self.oyna.width() - self.width() )// 2, self.y)
 
-class input(QLineEdit):
-    def __init__(self, oyna : QWidget, y : int):
+class Input(QLineEdit):
+    def __init__(self, oyna : QWidget, y : int, placeHolder : str = "Kiriting..."):
         super().__init__(oyna)
 
         self.oyna = oyna
         self.y = y
 
         self.setGeometry(50, y, oyna.width() - 100, 50)
+        self.setPlaceholderText(placeHolder)
+        self.setStyleSheet("""
+            font-size : 22px;
+            border : 3px solid black;
+        """)
 
+class Label(QLabel):
+    def __init__(self, txt : str, oyna : QWidget, y : int):
+        super().__init__(txt, oyna)
+        
+        self.oyna = oyna
+        self.y = y
+
+        self.setStyleSheet("""font-size : 26px;""")
+        self.adjustSize()
+        self.move((oyna.width() - self.width())//2, y)
+
+class TextArea(QTextEdit):
+    def __init__(self, oyna : QWidget, y : int, paceHolder : str = "Kiriting..."):
+        super().__init__(oyna)
+        self.oyna = oyna
+        self.y = y
+        self.setPlaceholderText(paceHolder)
+        self.setGeometry(50, y, oyna.width() - 100, 150)
+        self.setStyleSheet("font-size : 22px;")
