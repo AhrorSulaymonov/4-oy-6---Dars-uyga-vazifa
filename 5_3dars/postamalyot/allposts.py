@@ -1,11 +1,21 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QScrollArea, QApplication
 from components import Button, Input, Label, TextArea
+from PyQt5.QtGui import QPalette, QBrush, QPixmap
 from database import Database
 
 class AllPostsPage(QWidget):
     def __init__(self) -> None:
         super().__init__()
         self.setFixedSize(450, 600)
+        palette = QPalette()
+        pixmap = QPixmap("Naruto.png")
+
+        if not pixmap.isNull():
+            palette.setBrush(QPalette.Background, QBrush(pixmap.scaled(self.size())))
+            self.setPalette(palette)
+        else:
+            print("Rasmni yuklashda xatolik!")
+
         self.setWindowTitle("All Posts Page")
 
         self.writePostBtn = Button("Post yozish", self, 20)
@@ -28,6 +38,7 @@ class AllPostsPage(QWidget):
         db = Database()
 
         posts = db.selectAllPosts()
+        
         if len(posts) > 0:
             for i in range(len(posts)):
                 post = QLineEdit(posts[i]["text"])

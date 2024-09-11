@@ -1,11 +1,23 @@
 from PyQt5.QtWidgets import  QWidget, QLabel, QScrollArea, QVBoxLayout, QApplication, QLineEdit
 from components import Button, Input, Label, TextArea
 from database import Database
+from PyQt5.QtGui import QPalette, QBrush, QPixmap
 
 class MyPostsPage(QWidget):
     def __init__(self, user_id) -> None:
         super().__init__()
         self.setFixedSize(400, 600)
+        palette = QPalette()
+        pixmap = QPixmap("Naruto.png")
+
+        if not pixmap.isNull():
+            palette.setBrush(QPalette.Background, QBrush(pixmap.scaled(self.size())))
+            self.setPalette(palette)
+        else:
+            print("Rasmni yuklashda xatolik!")
+
+
+            
         self.setWindowTitle("My Posts Page")
         self.label = Label("Mening postlarim",self,10)
         scrolArea = QScrollArea()

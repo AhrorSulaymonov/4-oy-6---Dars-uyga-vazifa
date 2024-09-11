@@ -41,7 +41,16 @@ class Database:
             data = file.read()
             posts = json.loads(data) or []
             return posts
-
+    def getUserName(self, user_id : int) -> str:
+         with open("./database/users.json", "r", encoding="utf-8") as file:
+            data = file.read()
+            users = json.loads(data) or []
+            if len(users) > 0:
+                for i in range(len(users)):
+                    if users[i]["id"] == user_id:
+                        return users[i]["name"]
+        
+        
     def selectuserPosts(self,user_id : int) -> list:
         with open("./database/posts.json", "r", encoding="utf-8") as file:
             data = file.read()

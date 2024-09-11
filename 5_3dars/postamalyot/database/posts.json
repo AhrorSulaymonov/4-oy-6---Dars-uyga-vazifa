@@ -63,5 +63,15 @@
         "id": 13,
         "user_id": 1,
         "text": "salomat"
+    },
+    {
+        "id": 14,
+        "user_id": 1,
+        "text": "hello bro"
+    },
+    {
+        "id": 15,
+        "user_id": 1,
+        "text": ""
     }
 ]
