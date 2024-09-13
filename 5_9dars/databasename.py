@@ -7,9 +7,6 @@ class databaseui(QWidget):
         super().__init__()
         self.resize(800, 500)
         self.move(400, 200)
-        self.setStyleSheet("""
-
-        """)
         self.databaseLabel = QLabel(self)
         
         self.databaseLabel.setText("Database nomini kiriting!")
