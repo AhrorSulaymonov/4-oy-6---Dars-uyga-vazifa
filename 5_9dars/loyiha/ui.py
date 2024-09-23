@@ -78,7 +78,7 @@ class Window(QWidget):
 
 
     def buyFunction(self):
-        
+
         no = getLastSelectedSeat()
         FIO = self.fioInput.text()
 

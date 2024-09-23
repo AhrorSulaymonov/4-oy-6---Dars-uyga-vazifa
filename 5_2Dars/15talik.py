@@ -9,13 +9,13 @@ winlist = [[10,10,100,100,1],[120,10,100,100,2],[230,10,100,100,3],[340,10,100,1
 buttons = []
 buttonsinfo = []
 class window(QWidget):
-    
+
     def __init__(self) -> None:
         super().__init__()
         global koordinatalar, tanlanganlar, buttons, buttonsinfo, winlist
         self.setWindowTitle("15talik")
         self.setFixedSize(450,450)
-        
+
         self.button1 = QPushButton(self)
         self.button2 = QPushButton(self)
         self.button3 = QPushButton(self)
@@ -46,15 +46,15 @@ class window(QWidget):
         buttons.append(self.button13)
         buttons.append(self.button14)
         buttons.append(self.button15)
-       
+
         for i in range(len(buttons)):
-            
+
             kordinata = random.choice(koordinatalar)
             while kordinata[:4] in tanlanganlar:
 
                 kordinata = random.choice(koordinatalar)
             tanlanganlar.append(kordinata[:4])
-            
+
             buttons[i].setText(str(i+1))
             buttons[i].setGeometry(kordinata[0],kordinata[1],kordinata[2],kordinata[3])
             kordinata.append(i+1)
@@ -76,11 +76,11 @@ class window(QWidget):
         self.button13.clicked.connect(lambda: self.buttonclick(self.button13))
         self.button14.clicked.connect(lambda: self.buttonclick(self.button14))
         self.button15.clicked.connect(lambda: self.buttonclick(self.button15))
-    
+
         self.show()
 
 
-        
+
     def buttonclick(self, button: QPushButton):
 
         global koordinatalar, tanlanganlar, buttons, buttonsinfo, winlist

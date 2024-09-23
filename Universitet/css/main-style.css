@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.main{
+    width: 1100px;
+    margin: 0 auto;
+    color: blue;
+    border:  1px solid black;
+}
+
+.for-adds{
+    border: 2px solid red;
+}
+
+.navbar-main{
+    border: 2px solid green;
+}
+
+.nav{
+    list-style: none;
+    display: flex;
+}
+.nav li {
+    margin-left: 10px;
+}

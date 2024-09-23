@@ -6,6 +6,7 @@ STATUS BOOL DEFAULT FALSE,
 SEAT_NUMBER INT NOT NULL
 );
 
+
 delete from tickets;
 
 drop table tickets;
